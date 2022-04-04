@@ -41,4 +41,11 @@ public class UserServiceUmpl implements UserService {
         return userRepository.count();
     }
 
+
+
+    @Override
+    public Object UpdateUser(User user,int id) {
+        return userRepository.save(user);
+    }
+
 }

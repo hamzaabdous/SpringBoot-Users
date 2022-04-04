@@ -11,6 +11,6 @@ public interface UserService {
     public String  DeleteId(int id);
     public Optional<User> UserCherche (int id);
     public long countUsers();
-
+    public Object UpdateUser(User user,int id);
 
 }

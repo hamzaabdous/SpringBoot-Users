@@ -82,4 +82,12 @@ public class UserController {
 
         return objectNode ;
     }
+    @PutMapping("/update")
+    public Object UpdateUser(@RequestBody User user){
+
+        ObjectNode objectNode = (ObjectNode) mapper.createObjectNode();
+        objectNode.put("status", "done");
+        userService.UpdateUser(user, user.getId());
+        return objectNode;
+    }
 }
