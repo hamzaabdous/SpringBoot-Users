@@ -15,25 +15,22 @@ public class UserServiceUmpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public User userSave(User user) {
-        return userRepository.save(user);
+    public Optional<User>  userSave(User user) {
+        Optional<User> userO = Optional.ofNullable(userRepository.save(user));
+
+        return userO;
     }
     @Override
     public List<User> findAll(){
         return userRepository.findAll();
     }
     @Override
-    public String DeleteId(int id){
+    public void DeleteId(int id){
         userRepository.deleteById(id);
-        return "delete done";
-
     }
     @Override
     public Optional<User> UserCherche(int id){
-
-
         return userRepository.findById(id);
-
     }
 
     @Override
@@ -41,10 +38,8 @@ public class UserServiceUmpl implements UserService {
         return userRepository.count();
     }
 
-
-
     @Override
-    public Object UpdateUser(User user,int id) {
+    public User UpdateUser(User user,int id) {
         return userRepository.save(user);
     }
 

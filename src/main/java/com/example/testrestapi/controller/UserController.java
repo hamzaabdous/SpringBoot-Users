@@ -21,20 +21,12 @@ public class UserController {
     private ObjectCodec mapper;
 
     @PostMapping("/add")
-    public ObjectNode add(@RequestBody User user){
-        ObjectNode objectNodeBad = (ObjectNode) mapper.createObjectNode();
-        objectNodeBad.put("status", "404-user");
-        objectNodeBad.put("description", "user not add");
-        ObjectNode objectNodeoK = (ObjectNode) mapper.createObjectNode();
-        objectNodeoK.put("status", "DONE");
-        objectNodeoK.put("description", "user add Add");
-        if (user.getName()==null){
-            return objectNodeBad;
-        }
-        else {
-            userService.userSave(user);
-            return objectNodeoK;
-        }
+    public Optional<User> add(@RequestBody User user){
+
+        Optional<User> userCreated=userService.userSave(user);
+
+            return userService.userSave(user);
+
     }
 
     @GetMapping("/")
@@ -44,22 +36,8 @@ public class UserController {
         return users;
     }
     @PostMapping("/delete/{id}")
-    public ObjectNode DeleteId(@PathVariable("id") int id){
-        ObjectNode objectNodeBad = (ObjectNode) mapper.createObjectNode();
-        objectNodeBad.put("status", "404-user");
-        objectNodeBad.put("description", "user not found");
-        ObjectNode objectNodeOk = (ObjectNode) mapper.createObjectNode();
-        objectNodeOk.put("status", "DONE");
-        objectNodeOk.put("description", "user is found");
-
-        Optional<Object> userIsFound =UserCherche(id);
-        if(userIsFound.isEmpty()){
-            return objectNodeBad;
-        }
-        else {
+    public void DeleteId(@PathVariable("id") int id){
             userService.DeleteId(id);
-            return objectNodeOk;
-        }
     }
     @GetMapping("/{id}")
     public Optional<Object> UserCherche(@PathVariable("id") int id){
@@ -83,11 +61,7 @@ public class UserController {
         return objectNode ;
     }
     @PutMapping("/update")
-    public Object UpdateUser(@RequestBody User user){
-
-        ObjectNode objectNode = (ObjectNode) mapper.createObjectNode();
-        objectNode.put("status", "done");
-        userService.UpdateUser(user, user.getId());
-        return objectNode;
+    public User UpdateUser(@RequestBody User user){
+        return userService.UpdateUser(user, user.getId());
     }
 }
